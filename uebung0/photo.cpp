@@ -51,6 +51,7 @@ int main() {
         p.x = x;
         p.y = y;
         ps.push_back(p);
+
     }
     sort(ps.begin(), ps.end(), kleiner);
 
