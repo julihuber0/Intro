@@ -9,28 +9,32 @@ int main() {
     cin >> boxCount;
 
     vector<int> boxes(boxCount);
+    vector<bool> done(boxCount);
 
-    for(int i = 0; i < boxCount; ++i) {
-        int box;
-        cin >> box;
-        boxes[i] = box;
+    for(int i = 0; i<boxCount; ++i) {
+        int b;
+        cin >> b;
+        boxes[i] = b;
+        done[i] = false;
     }
     sort(boxes.begin(), boxes.end());
-    int resBoxes = 0;
-    while(!boxes.empty()) {
-        int currentBox = boxes[0]*2;
-        unsigned int index = 0;
-        boxes.erase(boxes.begin()+index);
-        while(index < boxes.size()) {
-            if(boxes[index] >= currentBox) {
-                currentBox = boxes[index]*2;
-                boxes.erase(boxes.begin()+index);
-            } else {
-                index += 1;
+
+    int l = 0;
+    while(l<boxCount) {
+        for(int i = l+1; i<boxCount; ++i) {
+            if(boxes[l]*2<=boxes[i] && done[i]!= true) {
+                done[i] = true;
+                break;
             }
         }
-        resBoxes += 1;
+        l +=1;
     }
-    cout << resBoxes;
+    int res = 0;
+    for(int i = 0; i<boxCount; ++i) {
+        if(done[i] == false) {
+            res += 1;
+        }
+    }
+    cout << res;
 
 }
