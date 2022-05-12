@@ -24,10 +24,10 @@ int main() {
         for(int i = l+1; i<boxCount; ++i) {
             if(boxes[l]*2<=boxes[i] && done[i]!= true) {
                 done[i] = true;
+                l = i;
                 break;
             }
         }
-        l +=1;
     }
     int res = 0;
     for(int i = 0; i<boxCount; ++i) {
