@@ -10,15 +10,15 @@ int main() {
     int boxCount;
     cin >> boxCount;
 
-    vector<int> boxes(5);
+    vector<int> boxes(6);
     vector<bool> done(5);
 
 
 
     for(int i = 0; i<boxCount; ++i) {
-        int b = 0;
-        cin >> b;
-        boxes[i] = b;
+        int x = 0;
+        cin >> x;
+        boxes[i] = x;
         done[i] = false;
     }
     sort(boxes.begin(), boxes.end());
