@@ -4,21 +4,19 @@
 
 using namespace std;
 
-
+vector<int> boxes;
+vector<bool> done;
 
 int main() {
     int boxCount;
     cin >> boxCount;
 
-    vector<int> boxes(6);
-    vector<bool> done(5);
-
-
+    done.resize(boxCount);
 
     for(int i = 0; i<boxCount; ++i) {
         int x = 0;
         cin >> x;
-        boxes[i] = x;
+        boxes.push_back(x);
         done[i] = false;
     }
     sort(boxes.begin(), boxes.end());
