@@ -8,33 +8,23 @@ using namespace std;
 
 struct Person {
     string name;
-    double x;
-    double y;
+    int x;
+    int y;
 };
 
-double angle(double x, double y) {
-    if(y>0) {
-        return atan(x/y);
-    }
-    if(y == 0) {
-        return 90;
-    }
-    return 180 + atan(x/y);
-}
-
 bool kleiner(const Person & p1, const Person & p2) {
-    double a1 = angle(p1.x, p1.y);
-    double a2 = angle(p2.x, p2.y);
-    if(a1 < a2) {
+    int f = p1.y*p2.x;
+    int s = p2.y*p1.x;
+    if(f>s) {
         return true;
-    } else if (a1 == a2) {
+    } else if(f<s) {
+        return false;
+    } else {
         if(p1.x<p2.x) {
             return true;
         } else {
-            return true;
+            return false;
         }
-    } else {
-        return false;
     }
 }
 
