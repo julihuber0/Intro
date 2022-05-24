@@ -1,49 +1,37 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
 
-
 int main() {
-    int boxCount;
+    int64_t boxCount;
     cin >> boxCount;
 
-    vector<int> boxes(boxCount);
-    vector<bool> done(boxCount);
-    vector<bool> belegt(boxCount);
+    vector<int64_t> boxes(boxCount);
 
 
-
-    for(int i = 0; i<boxCount; ++i) {
+    for (int64_t i = 0; i < boxCount; ++i) {
         cin >> boxes[i];
-        done[i] = false;
-        belegt[i] = false;
     }
 
     sort(boxes.begin(), boxes.end());
 
-    int l = 0;
-    int res = 0;
-    while(l<boxCount) {
-        for(int i = l+1; i<boxCount; ++i) {
-            if(boxes[l]*2<=boxes[i] && !belegt[i] && !done[i]) {
-                done[l] = true;
-                belegt[i] = true;
-                //res +=1;
+    int64_t currentBox = 0;
+    int64_t res = boxCount;     //The visible boxes
+    for (int64_t i = 0; i < boxCount; ++i) {
+        bool found = false;
+        for (int64_t j = currentBox; j < boxCount; ++j) {
+            if (boxes[i] * 2 <= boxes[j]) {
+                currentBox = j + 1;
+                res -= 1;
+                found = true;
                 break;
             }
         }
-        l += 1;
-    }
-
-    for(int i = 0; i< boxCount; ++i) {
-        if(!done[i]) {
-            res += 1;
+        if (!found) {
+            break;
         }
     }
 
     cout << res << "\n";
-
 }
