@@ -9,7 +9,7 @@ void visit(int64_t v, vector<bool> &visited, vector<vector<int64_t>> list, vecto
     for (int64_t w: list[v]) {
         if (!visited[w]) {
             visit(w, visited, list, d, dist+1, vol);
-        } else {
+        } else if(d[w]<dist-1){
             vol = vol + ((dist+1)-d[w])*((dist+1)-d[w]);
         }
     }
