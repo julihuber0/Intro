@@ -2,13 +2,17 @@
 
 using namespace std;
 
+vector<vector<int>> l;
+vector<int> d;
+int vol = 0;
 
-void visit(int64_t v, vector<bool> &visited, vector<vector<int64_t>> list, vector<int64_t> &d, int64_t dist, int64_t &vol) {
+
+void visit(int v, vector<bool> &visited, int dist) {
     visited[v] = true;
     d[v] = dist;
-    for (int64_t w: list[v]) {
+    for (int w: l[v]) {
         if (!visited[w]) {
-            visit(w, visited, list, d, dist+1, vol);
+            visit(w, visited, dist+1);
         } else if(d[w]<dist-1){
             vol = vol + ((dist+1)-d[w])*((dist+1)-d[w]);
         }
@@ -16,24 +20,25 @@ void visit(int64_t v, vector<bool> &visited, vector<vector<int64_t>> list, vecto
 }
 
 int main() {
-    int64_t cases;
+    int cases;
     cin >> cases;
 
-    for(int64_t i = 0; i<cases; ++i) {
-        int64_t n, m;
+    for(int i = 0; i<cases; ++i) {
+        int n, m;
         cin >> n >> m;
-        vector<vector<int64_t>> list(n);
-        vector<int64_t> dist(n);
-        int64_t vol = 0;
+        l.clear();
+        l.resize(n);
+        d.clear();
+        d.resize(n);
+        vol = 0;
         for(int j = 0; j < m; ++j) {
-            int64_t x, y;
+            int x, y;
             cin >> x >> y;
-            list[x].push_back(y);
-            list[y].push_back(x);
+            l[x].push_back(y);
+            l[y].push_back(x);
         }
         vector<bool> visited(n, false);
-        vector<bool> branch(n, false);
-        visit(0, visited, list, dist, 0, vol);
+        visit(0, visited, 0);
         cout << vol << "\n";
     }
 }
