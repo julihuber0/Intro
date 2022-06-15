@@ -37,15 +37,14 @@ bool makeUnion(int a, int b, vector<int> &parent, vector<int> &rank) {
     int x = find(a, parent);
     int y = find(b, parent);
     if(x!=y) {
-        parent[x] = y;
-    }
-    if(rank[x] > rank[y]) {
-        parent[y] = x;
-    } else if(rank[x] < rank[y]) {
-        parent[x] = y;
-    } else {
-        parent[x] = y;
-        rank[y] = rank[y] + 1;
+        if(rank[x] > rank[y]) {
+            parent[y] = x;
+        } else if(rank[x] < rank[y]) {
+            parent[x] = y;
+        } else {
+            parent[x] = y;
+            rank[y] = rank[y] + 1;
+        }
     }
     return true;
 }

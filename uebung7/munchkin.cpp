@@ -2,12 +2,12 @@
 
 using namespace std;
 
-int INF = INT32_MAX;
+int64_t INF = INT64_MAX;
 typedef pair<int64_t, int64_t> pi;
 vector<vector<pi>> adj_list;
 
-vector<int> dijkstra(int s) {
-    vector<int> d(adj_list.size(), INF);
+vector<int64_t> dijkstra(int64_t s) {
+    vector<int64_t> d(adj_list.size(), INF);
     priority_queue<pi, vector<pi>, greater<pi>> pq;
     d[s] = 0;
     pq.push(make_pair(0, s));
@@ -30,16 +30,16 @@ int main() {
     int classes;
     cin >> classes;
     vector<pi> cl;
-    for(int i = 0; i< classes; ++i) {
-        int d, c;
+    for(int64_t i = 0; i< classes; ++i) {
+        int64_t d, c;
         cin >> d >> c;
         cl.push_back(make_pair(d, c));
     }
-    int edges;
+    int64_t edges;
     cin >> edges;
     adj_list.resize(classes);
-    for(int i = 0; i<edges; ++i) {
-        int c1, c2;
+    for(int64_t i = 0; i<edges; ++i) {
+        int64_t c1, c2;
         cin >> c1 >> c2;
         c1 -= 1;
         c2 -= 1;
@@ -47,18 +47,22 @@ int main() {
         adj_list[c1].push_back(make_pair(c2, diff));
         adj_list[c2].push_back(make_pair(c1, diff));
     }
-    int q;
+    int64_t q;
     cin >> q;
-    for(int i = 0; i<q; ++i) {
-        int c1, c2;
+    vector<vector<int64_t>> ds(classes);
+    for(int64_t i = 0; i<q; ++i) {
+        int64_t c1, c2;
         cin >> c1 >> c2;
         c1 -=1;
         c2 -=1;
-        vector<int> d = dijkstra(c1);
-        if(d[c2]<INF) {
-            cout << d[c2] << endl;
+        if(ds[c1].empty()) {
+            ds[c1] = dijkstra(c1);
+        }
+        if(ds[c1][c2]<INF) {
+            cout << ds[c1][c2] << endl;
         } else {
             cout << "BRIBE DM WITH FOOD" << endl;
         }
+
     }
 }
