@@ -62,13 +62,16 @@ vector<vector<pi>> mst(vector<wEdge> &edges, int64_t n) {
     return nList;
 }
 
-void visit(int64_t v, vector<bool> &visited, vector<vector<pi>> list, vector<pi> &src) {
+vector<pi> src;
+vector<vector<pi>> lst;
+
+void visit(int64_t v, vector<bool> &visited) {
     visited[v] = true;
-    for (pi w: list[v]) {
+    for (pi w: lst[v]) {
         if (!visited[w.first]) {
             src[w.first].first = v;
             src[w.first].second = w.second;
-            visit(w.first, visited, list, src);
+            visit(w.first, visited);
         }
     }
 }
@@ -92,17 +95,17 @@ int main() {
         x -= 1;
         y -= 1;
 
-        wEdge w1{w1.x, w1.y, w1.w};
+        wEdge w1{x, y, w};
         edges.push_back(w1);
     }
 
     sort(edges.begin(), edges.end(), kleiner);
-    adj_list = mst(edges, n);
+    lst = mst(edges, n);
 
     for (int64_t i = 0; i < orders.size(); ++i) {
         vector<bool> visited(n, false);
-        vector<pi> src(n, make_pair(-1, INT64_MAX));
-        visit(orders[i].first, visited, adj_list, src);
+        src.resize(n, make_pair(-1, INT64_MAX));
+        visit(orders[i].first, visited);
         int64_t minF = INT64_MAX;
 
         int64_t cur = orders[i].second;
@@ -118,6 +121,7 @@ int main() {
             cout << "0" << endl;
         }
         minF = INT64_MAX;
+        src.clear();
     }
 
 
