@@ -5,52 +5,45 @@ using namespace std;
 typedef pair<int, int> pi;
 int INF = INT32_MAX;
 
-bool bfs(vector<vector<pi>> list, int s, int t, vector<pi> &parent) {
-    int n = list.size();
+bool bfs(vector<vector<int>> &resMatr, int s, int t, vector<int> &parent) {
+    int n = t+1;
     vector<bool> visited(n, false);
-    vector<int> dist(n, INF);
-    dist[s] = 0;
     queue<int> q;
     q.push(s);
+    visited[s] = true;
+    parent[s] = -1;
 
     while (!q.empty()) {
         int v = q.front();
         q.pop();
-        for (pi w: list[v]) {
-            if (!visited[w.first] && w.second > 0) {
-                if (w.first == t) {
-                    parent[w.first] = make_pair(v, w.second);
+        for (int i = 0; i < n; ++i) {
+            if (!visited[i] && resMatr[v][i] > 0) {
+                if (i == t) {
+                    parent[i] = v;
                     return true;
                 }
-                q.push(w.first);
-                parent[w.first] = make_pair(v, w.second);
-                visited[w.first] = true;
+                q.push(i);
+                parent[i] = v;
+                visited[i] = true;
             }
         }
     }
     return false;
 }
 
-int maxFlow(vector<vector<pi>> &resList, int s, int t) {
-    vector<pi> parent(resList.size());
+int maxFlow(vector<vector<int>> &resMatr, int s, int t) {
+    vector<int> parent(t+1, -1);
     int max = 0;
-    while (bfs(resList, s, t, parent)) {
+    while (bfs(resMatr, s, t, parent)) {
         int path = INF;
-        for (int v = t; v != s; v = parent[v].first) {
-            path = min(path, parent[v].second);
+        for (int v = t; v != s; v = parent[v]) {
+            int u = parent[v];
+            path = min(path, resMatr[u][v]);
         }
-        for (int v = t; v != s; v = parent[v].first) {
-            int u = parent[v].first;
-            for (int i = 0; i < resList[u].size(); ++i) {
-                if (resList[u][i].first == v) {
-                    resList[u][i].second -= path;
-                }
-            }
-            for (int i = 0; i < resList[v].size(); ++i) {
-                if (resList[v][i].first == u) {
-                    resList[v][i].second += path;
-                }
-            }
+        for (int v = t; v != s; v = parent[v]) {
+            int u = parent[v];
+            resMatr[u][v] -= path;
+            resMatr[v][u] += path;
         }
         max += path;
     }
@@ -63,21 +56,27 @@ int main() {
     for (int i = 0; i < cases; ++i) {
         int n, b, m;
         cin >> n >> b >> m;
-        vector<vector<pi>> rl(n+1);
+        vector<vector<int>> rl(n + 1);
+        for (int j = 0; j < n + 1; ++j) {
+            rl[j].resize(n + 1);
+            for (int k = 0; k < n + 1; ++k) {
+                rl[j][k] = -1;
+            }
+        }
         vector<int> bunkers;
-        for(int j = 0; j<b; ++j) {
+        for (int j = 0; j < b; ++j) {
             int bk;
             cin >> bk;
-            rl[bk].push_back(make_pair(n, INF));
-            rl[n].push_back(make_pair(bk, 0));
+            rl[bk][n] = INF;
+            rl[n][bk] = 0;
         }
-        for(int j = 0; j<m; ++j) {
+        for (int j = 0; j < m; ++j) {
             int x, y, w;
             cin >> x >> y >> w;
-            rl[x].push_back(make_pair(y, w));
-            rl[y].push_back(make_pair(x, 0));
+            rl[x][y] = w;
+            rl[y][x] = 0;
         }
         int me = maxFlow(rl, 0, n);
-        cout << me << "\n";
+        cout << me << endl;
     }
 }
