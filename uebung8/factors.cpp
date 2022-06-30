@@ -2,8 +2,8 @@
 
 using namespace std;
 
-typedef pair<int, int> pi;
 int INF = INT32_MAX;
+vector<vector<int>> matrix;
 
 bool bfs(vector<vector<int>> &list, vector<vector<int>> &mat, int s, int t, vector<int> &parent) {
     int n = t + 1;
@@ -51,42 +51,49 @@ int main() {
     int cases;
     cin >> cases;
 
-    for(int t = 0; t<cases; ++t) {
-        int n, e, x, p;
-        cin >> n >> e >> x >> p;
-        vector<vector<int>> rList(2*n+2);
-        vector<vector<int>> rMatrix(2*n+2, vector<int> (2*n+2, 0));
-        for(int i = 0; i<n; ++i) {
-            rList[i].push_back(i+n);
-            //rList[i+n].push_back(i);
-            rMatrix[i][i+n] = 1;
-            //rMatrix[i+n][i] = 1;
+    for (int t = 0; t < cases; ++t) {
+        int n;
+        cin >> n;
+        vector<int> a(n);
+        for (int i = 0; i < n; ++i) {
+            int e;
+            cin >> e;
+            a[i] = e;
         }
-        for(int i = 0; i<e; ++i) {
-            int st, tg;
-            cin >> st >> tg;
-            rList[st+n].push_back(tg);
-            rList[tg+n].push_back(st);
+        int m;
+        cin >> m;
+        vector<int> b(m);
+        for (int i = 0; i < m; ++i) {
+            int e;
+            cin >> e;
+            b[i] = e;
+        }
+        vector<vector<int>> list(n + m + 2);
+        matrix.clear();
+        matrix.resize(n + m + 2, vector<int> (n+m+2, 0));
+        int src = n + m;
+        int target = n + m + 1;
+        for (int i = 0; i < n; ++i) {
+            list[src].push_back(i);
+            list[i].push_back(src);
+            matrix[src][i] = 1;
+            for (int j = 0; j < m; ++j) {
+                if (b[j] % a[i] == 0) {
+                    list[i].push_back(n + j);
+                    list[n + j].push_back(i);
+                    matrix[i][n + j] = 1;
+                }
+            }
 
-            rMatrix[st+n][tg] = INF;
-            rMatrix[tg+n][st] = INF;
         }
-        for(int i = 0; i < x; ++i) {
-            int ex;
-            cin >> ex;
-            rList[rList.size()-2].push_back(ex);
-            rMatrix[rList.size()-2][ex] = INF;
-
+        for (int i = 0; i < m; ++i) {
+            list[n + i].push_back(target);
+            list[target].push_back(n + i);
+            matrix[n + i][target] = 1;
         }
-        for(int i = 0; i<p; ++i) {
-            int pw;
-            cin >> pw;
-            rList[pw+n].push_back(rList.size()-1);
-            rMatrix[pw+n][rList.size()-1] = INF;
-
-        }
-        int fl;
-        fl = maxFlow(rList, rMatrix, rList.size()-2, rList.size()-1);
-        cout << fl << endl;
+        int max;
+        max = maxFlow(list, matrix, src, target);
+        cout << "Case " << t + 1 << ": " << max << "\n";
     }
 }
+
