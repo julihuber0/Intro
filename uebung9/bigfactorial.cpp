@@ -104,56 +104,14 @@ vector<int> factorial(int v) {
     return r;
 }
 
-int pow(int x, int n) {
-    if(n == 0) {
-        return 1;
-    } else if(n==1){
-        return x;
-    } else if(n%2 == 1) {
-        return x * pow(x, n-1);
-    } else {
-        int temp = pow(x, n/2);
-        return temp * temp;
-    }
-}
-
-vector<vector<int64_t>> multiplyMatrix(vector<vector<int64_t>> m1, vector<vector<int64_t>> m2) {
-    vector<vector<int64_t>> res(2, vector<int64_t>(2, 0));
-    res[0][0] = m1[0][0]*m2[0][0] + m1[0][1]*m2[1][0];
-    res[0][1] = m1[0][0]*m2[0][1] + m1[0][1]*m2[1][1];
-    res[1][0] = m1[1][0]*m2[0][0] + m1[1][1]*m2[1][0];
-    res[1][1] = m1[1][0]*m2[0][1] + m1[1][1]*m2[1][1];
-    return res;
-}
-
-vector<vector<int64_t>> matPow(vector<vector<int64_t>> m, int n) {
-    if(n == 1) {
-        return m;
-    } else if(n%2==1) {
-        return multiplyMatrix(m, matPow(m, n-1));
-    } else {
-        vector<vector<int64_t>> temp = matPow(m, n/2);
-        return multiplyMatrix(temp, temp);
-    }
-}
-
-int64_t fib(int n) {
-    if(n == 0) {
-        return 0;
-    }
-    if(n == 1) {
-        return 1;
-    }
-    vector<vector<int64_t>> m1(2);
-    m1[0].push_back(1);
-    m1[0].push_back(1);
-    m1[1].push_back(1);
-    m1[1].push_back(0);
-    vector<vector<int64_t>> pwd = matPow(m1, n-1);
-    return pwd[0][0];
-}
-
 int main() {
-    int64_t f = fib(95);
-    cout << f;
+    int cases;
+    cin >> cases;
+    for(int t = 0; t< cases; ++t) {
+        int n;
+        cin >> n;
+        vector<int> f = factorial(n);
+        cout << n << "!" << "\n";
+        printNumber(f);
+    }
 }
