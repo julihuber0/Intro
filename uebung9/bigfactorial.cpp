@@ -2,6 +2,16 @@
 
 using namespace std;
 
+template <
+        class result_t   = std::chrono::milliseconds,
+        class clock_t    = std::chrono::steady_clock,
+        class duration_t = std::chrono::milliseconds
+>
+auto since(std::chrono::time_point<clock_t, duration_t> const& start)
+{
+    return std::chrono::duration_cast<result_t>(clock_t::now() - start);
+}
+
 vector<vector<short>> fibo;
 
 bool printNumber(vector<short> &v1) {
@@ -104,18 +114,18 @@ bool factorial(int v) {
     for(int i = 1; i<v; ++i) {
         fibo.push_back(multiply(fibo[i], it));
         it = add(it, {1});
-        //r = multiply(r, it);
     }
     return true;
 }
 
 int main() {
-    int cases = 1;
-    //cin >> cases;
+    int cases;
+    cin >> cases;
+    factorial(1000);
     for(int t = 0; t< cases; ++t) {
         int n;
-        //cin >> n;
-        factorial(1000);
-        printNumber(fibo[1000]);
+        cin >> n;
+        cout << n << "!\n";
+        printNumber(fibo[n]);
     }
 }
