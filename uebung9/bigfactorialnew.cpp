@@ -20,7 +20,7 @@ vector<vector<int64_t>> fac;
 bool printNumber(vector<int64_t> &v1) {
     bool empty = false;
     for (int i = 0; i < v1.size(); ++i) {
-         if (v1[i] != 0) {
+        if (v1[i] != 0) {
             string num = to_string(v1[i]);
 
             if(i!=0) {
@@ -127,46 +127,8 @@ bool factorial(int v) {
     return true;
 }
 
-vector<vector<vector<int64_t>>> multiplyMatrix(vector<vector<vector<int64_t>>> m1, vector<vector<vector<int64_t>>> m2) {
-    vector<vector<vector<int64_t>>> res(2, vector<vector<int64_t>>(2, vector<int64_t>(1, 0)));
-    res[0][0] = add(multiply(m1[0][0], m2[0][0]), multiply(m1[0][1], m2[1][0]));
-    res[0][1] = add(multiply(m1[0][0], m2[0][1]), multiply(m1[0][1], m2[1][1]));
-    res[1][0] = add(multiply(m1[1][0], m2[0][0]), multiply(m1[1][1], m2[1][0]));
-    res[1][1] = add(multiply(m1[1][0], m2[0][1]), multiply(m1[1][1], m2[1][1]));
-    return res;
-}
-
-vector<vector<vector<int64_t>>> matPow(vector<vector<vector<int64_t>>> m, int n) {
-    if(n == 1) {
-        return m;
-    } else if(n%2==1) {
-        return multiplyMatrix(m, matPow(m, n-1));
-    } else {
-        vector<vector<vector<int64_t>>> temp = matPow(m, n/2);
-        return multiplyMatrix(temp, temp);
-    }
-}
-
-vector<int64_t> fib(int n) {
-    if(n == 0) {
-        return {0};
-    }
-    if(n == 1) {
-        return {1};
-    }
-    vector<vector<vector<int64_t>>> m1(2);
-    m1[0].push_back({1});
-    m1[0].push_back({1});
-    m1[1].push_back({1});
-    m1[1].push_back({0});
-    vector<vector<vector<int64_t>>> pwd = matPow(m1, n-1);
-    return pwd[0][0];
-}
-
 int main() {
-    auto start = std::chrono::steady_clock::now();
-    vector<int64_t> f = fib(94);
-    std::cout << "Elapsed(ms)=" << since(start).count() << std::endl;
-    printNumber(f);
+    factorial(1000);
+    printNumber(fac[1000]);
 
 }
