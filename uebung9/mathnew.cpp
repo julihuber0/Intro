@@ -136,7 +136,7 @@ vector<vector<vector<int64_t>>> multiplyMatrix(vector<vector<vector<int64_t>>> m
     return res;
 }
 
-vector<vector<vector<int64_t>>> matPow(vector<vector<vector<int64_t>>> m, int n) {
+vector<vector<vector<int64_t>>> matPow(vector<vector<vector<int64_t>>> m, int64_t n) {
     if(n == 1) {
         return m;
     } else if(n%2==1) {
@@ -147,7 +147,7 @@ vector<vector<vector<int64_t>>> matPow(vector<vector<vector<int64_t>>> m, int n)
     }
 }
 
-vector<int64_t> fib(int n) {
+vector<int64_t> fib(int64_t n) {
     if(n == 0) {
         return {0};
     }
@@ -165,7 +165,7 @@ vector<int64_t> fib(int n) {
 
 int main() {
     auto start = std::chrono::steady_clock::now();
-    vector<int64_t> f = fib(94);
+    vector<int64_t> f = fib(95);
     std::cout << "Elapsed(ms)=" << since(start).count() << std::endl;
     printNumber(f);
 
