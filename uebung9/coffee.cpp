@@ -14,11 +14,16 @@ int main() {
             cin >> j;
             jugs.push_back(j);
         }
-        vector<int> coffee;
+        int r = 0;
         for(int i = 0; i<k; ++i) {
             int c;
             cin >> c;
-            coffee.push_back(c);
+            r = r^(c%(jugs[i]+1));
+        }
+        if(r!=0) {
+            cout << "Win" << endl;
+        } else {
+            cout << "Lose" <<endl;
         }
     }
 }
