@@ -129,6 +129,13 @@ bool factorial(int v) {
 
 int main() {
     factorial(1000);
-    printNumber(fac[1000]);
+    int cases;
+    cin >> cases;
+    for(int t = 0; t<cases; ++t) {
+        int n;
+        cin >> n;
+        cout << n << "!\n";
+        printNumber(fac[n]);
+    }
 
 }

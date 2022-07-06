@@ -11,11 +11,12 @@ auto since(std::chrono::time_point<clock_t, duration_t> const &start) {
     return std::chrono::duration_cast<result_t>(clock_t::now() - start);
 }
 
-int64_t size = 1000000000000000;
-string zeros = "000000000000000";
-int digits = 15;
+int64_t size = 10000000;
+string zeros = "0000000";
+int digits = 7;
 
 vector<vector<int64_t>> fac;
+vector<vector<int64_t>> fibo;
 
 bool printNumber(vector<int64_t> &v1) {
     bool empty = false;
@@ -163,10 +164,42 @@ vector<int64_t> fib(int64_t n) {
     return pwd[0][0];
 }
 
+bool printString(vector<int64_t> &v) {
+    string out;
+    for (int i = 0; i < v.size(); ++i) {
+        if (v[i] != 0) {
+            string num = to_string(v[i]);
+
+            if(i!=0) {
+                for (int i = 0; i < digits - num.size(); ++i) {
+                    out.append("0");
+                }
+            }
+            out.append(num);
+        } else {
+            out.append(zeros);
+        }
+    }
+    if(out.size()<=100) {
+        cout << out << endl;
+    } else {
+        for(int i = 0; i<100; ++i) {
+            cout << out[out.size()-i];
+        }
+        cout << endl;
+    }
+    return true;
+}
+
 int main() {
-    auto start = std::chrono::steady_clock::now();
-    vector<int64_t> f = fib(95);
-    std::cout << "Elapsed(ms)=" << since(start).count() << std::endl;
-    printNumber(f);
+    int n;
+    while(cin >> n) {
+        if(n == 0) {
+            cout << 0 << endl;
+        } else {
+            vector<int64_t> f = fib(n);
+            printString(f);
+        }
+    }
 
 }
