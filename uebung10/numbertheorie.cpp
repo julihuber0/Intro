@@ -55,19 +55,6 @@ tuple<int64_t, int64_t, int64_t> extended_euclid(int64_t a, int64_t b) {
     return make_tuple(gcd, l, k - (a/b) * l);
 }
 
-tuple<int, int, int> extended_gcd(int a, int b)
-{
-    if (a == 0) {
-        return make_tuple(b, 0, 1);
-    }
-
-    int gcd, x, y;
-
-    tie(gcd, x, y) = extended_gcd(b % a, a);
-
-    return make_tuple(gcd, (y - (b/a) * x), x);
-}
-
 int main() {
     int cases;
     cin >> cases;
