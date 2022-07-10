@@ -51,8 +51,8 @@ tuple<int64_t, int64_t, int64_t> extended_euclid(int64_t a, int64_t b) {
         return make_tuple(a, 1, 0);
     }
     int gcd, k, l;
-    tie(gcd, k, l) = extended_euclid(b, mod(a,b));
-    return make_tuple(gcd, l, k - (a/b) * l);
+    tie(gcd, k, l) = extended_euclid(b, mod(a, b));
+    return make_tuple(gcd, l, k - (a / b) * l);
 }
 
 int main() {
@@ -61,19 +61,22 @@ int main() {
     for (int t = 0; t < cases; ++t) {
         int k, c;
         cin >> k >> c;
-        if(c == 1) {
+        if (c == 1) {
             cout << k + 1;
+        } else if (k == 1) {
+            cout << 1 << endl;
         } else {
             tuple<int64_t, int64_t, int64_t> r = extended_euclid(k, c);
             if (get<0>(r) != 1) {
                 cout << "IMPOSSIBLE" << endl;
             } else {
                 int64_t l = get<2>(r);
-                if(l<=0) {
+                while (l <= 0) {
                     l += k;
                 }
                 cout << l << endl;
             }
+
         }
     }
     //tuple<int64_t, int64_t, int64_t> r = extended_gcd(23, 1337);
