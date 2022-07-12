@@ -71,14 +71,15 @@ int main() {
                 cout << "IMPOSSIBLE" << endl;
             } else {
                 int64_t l = get<2>(r);
-                while (l <= 0) {
-                    l += k;
+                if (l > 10000000000) {
+                    cout << "IMPOSSIBLE" << endl;
+                } else {
+                    while (l <= 0) {
+                        l += k;
+                    }
+                    cout << l << endl;
                 }
-                cout << l << endl;
             }
-
         }
     }
-    //tuple<int64_t, int64_t, int64_t> r = extended_gcd(23, 1337);
-    //int a = 3;
 }
