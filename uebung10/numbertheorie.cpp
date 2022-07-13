@@ -50,9 +50,13 @@ tuple<int64_t, int64_t, int64_t> extended_euclid(int64_t a, int64_t b) {
     if (b == 0) {
         return make_tuple(a, 1, 0);
     }
-    int gcd, k, l;
+    int64_t gcd, k, l;
     tie(gcd, k, l) = extended_euclid(b, mod(a, b));
-    return make_tuple(gcd, l, k - (a / b) * l);
+    if (l > 1000000000) {
+        return make_tuple(0, 0, 0);
+    } else {
+        return make_tuple(gcd, l, k - (a / b) * l);
+    }
 }
 
 int main() {
@@ -62,7 +66,7 @@ int main() {
         int k, c;
         cin >> k >> c;
         if (c == 1) {
-            cout << k + 1;
+            cout << k + 1 << endl;
         } else if (k == 1) {
             cout << 1 << endl;
         } else {
@@ -71,14 +75,13 @@ int main() {
                 cout << "IMPOSSIBLE" << endl;
             } else {
                 int64_t l = get<2>(r);
-                if (l > 10000000000) {
-                    cout << "IMPOSSIBLE" << endl;
-                } else {
-                    while (l <= 0) {
-                        l += k;
-                    }
-                    cout << l << endl;
+                while (l < 0) {
+                    l += k;
                 }
+                while ((l - k) > 0) {
+                    l -= k;
+                }
+                cout << l << endl;
             }
         }
     }
