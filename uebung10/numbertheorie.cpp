@@ -59,7 +59,7 @@ tuple<int64_t, int64_t, int64_t> extended_euclid(int64_t a, int64_t b) {
     }
 }
 
-int main() {
+/*int main() {
     int cases;
     cin >> cases;
     for (int t = 0; t < cases; ++t) {
@@ -85,4 +85,10 @@ int main() {
             }
         }
     }
+}*/
+
+int main() {
+    tuple<int64_t, int64_t, int64_t> t = extended_euclid(4, 391391);
+    int64_t r = mod(get<1>(t), 391391);
+    cout << r;
 }
