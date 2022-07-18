@@ -21,7 +21,7 @@ vector<int> factor(int n) {
     vector<int> factors;
     int r = ceil(sqrt(n));
     for (int p = 2; p <= r; ++p) {
-        while (n % p != 0) {
+        while (n % p == 0) {
             factors.push_back(p);
             n = n / p;
         }
@@ -60,7 +60,7 @@ tuple<int64_t, int64_t, int64_t> extended_euclid(int64_t a, int64_t b) {
 }
 
 int main() {
-    int cases;
+    /*int cases;
     cin >> cases;
     for (int t = 0; t < cases; ++t) {
         int k, c;
@@ -84,5 +84,12 @@ int main() {
                 cout << l << endl;
             }
         }
+    }*/
+    vector<int> f = factor(851);
+    for(int i = 0; i<f.size(); ++i) {
+        cout << f[i] << ", ";
     }
+    cout << endl;
+    tuple<int64_t, int64_t, int64_t> r = extended_euclid(233, 792);
+    cout << get<1>(r);
 }
